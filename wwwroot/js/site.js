@@ -6,17 +6,43 @@ document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
 
   var calendar = new FullCalendar.Calendar(calendarEl, {
-    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+    schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+    plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid' ],
+    defaultView: 'resourceTimeGridDay',
+    defaultDate: '2019-08-07',
+    editable: true,
+    selectable: true,
+    eventLimit: true, // allow "more" link when too many events
     header: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      right: 'resourceTimeGridDay,resourceTimeGridTwoDay,timeGridWeek,dayGridMonth'
     },
-    locale: 'es',
-    defaultDate: '2019-08-12',
-    navLinks: true, // can click day/week names to navigate views
-    selectable: true,
-    selectMirror: true,
+    views: {
+      resourceTimeGridTwoDay: {
+        type: 'resourceTimeGrid',
+        duration: { days: 2 },
+        buttonText: '2 days',
+      }
+    },
+
+    //// uncomment this line to hide the all-day slot
+    //allDaySlot: false,
+
+    resources: [
+      { id: 'a', title: 'Room A' },
+      { id: 'b', title: 'Room B', eventColor: 'green' },
+      { id: 'c', title: 'Room C', eventColor: 'orange' },
+      { id: 'd', title: 'Room D', eventColor: 'red' }
+    ],
+    events: [
+      { id: '1', resourceId: 'a', start: '2019-08-06', end: '2019-08-08', title: 'event 1' },
+      { id: '2', resourceId: 'a', start: '2019-08-07T09:00:00', end: '2019-08-07T14:00:00', title: 'event 2' },
+      { id: '3', resourceId: 'b', start: '2019-08-07T12:00:00', end: '2019-08-08T06:00:00', title: 'event 3' },
+      { id: '4', resourceId: 'c', start: '2019-08-07T07:30:00', end: '2019-08-07T09:30:00', title: 'event 4' },
+      { id: '5', resourceId: 'd', start: '2019-08-07T10:00:00', end: '2019-08-07T15:00:00', title: 'event 5' }
+    ],
+
     select: function(arg) {
       var title = prompt('Event Title:');
       if (title) {
@@ -29,96 +55,13 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       calendar.unselect()
     },
-    editable: true,
-    eventLimit: true, // allow "more" link when too many events
-    resources: [{
-      id: 'a',
-      title: 'Room A'
-    }, {
-      id: 'b',
-      title: 'Room B',
-      eventColor: 'green'
-    }, {
-      id: 'c',
-      title: 'Room C',
-      eventColor: 'orange'
-    }, {
-      id: 'd',
-      title: 'Room D',
-      eventColor: 'red'
-    }],
-    events: [
-      {
-        title: 'All Day Event',
-        start: '2019-08-01'
-      },
-      {
-        title: 'Long Event',
-        start: '2019-08-07',
-        end: '2019-08-10'
-      },
-      {
-        groupId: 999,
-        title: 'Repeating Event',
-        start: '2019-08-09T16:00:00'
-      },
-      {
-        groupId: 999,
-        title: 'Repeating Event',
-        start: '2019-08-16T16:00:00'
-      },
-      {
-        title: 'Conference',
-        start: '2019-08-11',
-        end: '2019-08-13'
-      },
-      {
-        title: 'Meeting',
-        start: '2019-08-12T10:30:00',
-        end: '2019-08-12T12:30:00'
-      },
-      {
-        title: 'Lunch',
-        start: '2019-08-12T12:00:00'
-      },
-      {
-        title: 'Meeting',
-        start: '2019-08-12T14:30:00'
-      },
-      {
-        title: 'Happy Hour',
-        start: '2019-08-12T17:30:00'
-      },
-      {
-        title: 'Dinner',
-        start: '2019-08-12T20:00:00'
-      },
-      {
-        title: 'Birthday Party',
-        start: '2019-08-13T07:00:00'
-      },
-      {
-        title: 'Click for Google',
-        url: 'http://google.com/',
-        start: '2019-08-28'
-      }
-    ]
-    ,
-  select: function(start, end, jsEvent, view, resource) {
-    console.log(
-      'select',
-      start.format(),
-      end.format(),
-      resource ? resource.id : '(no resource)'
-    );
-  },
-  dayClick: function(date, jsEvent, view, resource) {
-    console.log(
-      'dayClick',
-      date.format(),
-      resource ? resource.id : '(no resource)'
-    );
-  }
+/*     dateClick: function(arg) {
+      console.log(
+        'dateClick',
+        arg.date,
+        arg.resource ? arg.resource.id : '(no resource)'
+      );
+    } */
   });
 
   calendar.render();
