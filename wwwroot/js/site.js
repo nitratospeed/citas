@@ -16,19 +16,12 @@ document.addEventListener('DOMContentLoaded', function() {
     header: {
       left: 'prev,next today',
       center: 'title',
-      right: 'resourceTimeGridDay,resourceTimeGridTwoDay,timeGridWeek,dayGridMonth'
-    },
-    views: {
-      resourceTimeGridTwoDay: {
-        type: 'resourceTimeGrid',
-        duration: { days: 2 },
-        buttonText: '2 days',
-      }
+      right: 'resourceTimeGridDay,timeGridWeek,dayGridMonth'
     },
 
     //// uncomment this line to hide the all-day slot
-    //allDaySlot: false,
-
+    allDaySlot: false,
+    locale: 'es',
     resources: [
       { id: 'a', title: 'Room A' },
       { id: 'b', title: 'Room B', eventColor: 'green' },
@@ -44,16 +37,17 @@ document.addEventListener('DOMContentLoaded', function() {
     ],
 
     select: function(arg) {
-      var title = prompt('Event Title:');
-      if (title) {
-        calendar.addEvent({
+      
+      $('#modal-nueva-cita').modal('show')
+
+/*         calendar.addEvent({
           title: title,
           start: arg.start,
           end: arg.end,
           allDay: arg.allDay
         })
-      }
-      calendar.unselect()
+
+      calendar.unselect() */
     },
 /*     dateClick: function(arg) {
       console.log(
