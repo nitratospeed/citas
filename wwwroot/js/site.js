@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var calendar = new FullCalendar.Calendar(calendarEl, {
     schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
     plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid' ],
-    defaultView: 'resourceTimeGridDay',
+    defaultView: 'dayGridMonth',
     defaultDate: '2019-08-07',
     editable: true,
     selectable: true,

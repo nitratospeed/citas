@@ -8,7 +8,7 @@ using citas.Models;
 
 namespace citas.Controllers
 {
-    public class calendarController : Controller
+    public class citacontroller : Controller
     {
         public IActionResult index()
         {

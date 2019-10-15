@@ -15,7 +15,6 @@ d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\citas.TagHelper
 d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\citas.TagHelpers.output.cache
 d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\citas.RazorCoreGenerate.cache
 d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
-d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.g.cshtml.cs
 d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.g.cshtml.cs
 d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
 d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.g.cshtml.cs
@@ -29,3 +28,4 @@ d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\citas.dll
 d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\citas.pdb
 D:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\citas.csproj.CopyComplete
 d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\Razor\Views\calendar\index.g.cshtml.cs
+d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\Razor\Views\cita\index.g.cshtml.cs
