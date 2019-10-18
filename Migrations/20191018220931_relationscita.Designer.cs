@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using citas.Models;
@@ -9,9 +10,10 @@ using citas.Models;
 namespace citas.Migrations
 {
     [DbContext(typeof(CitasContext))]
-    partial class CitasContextModelSnapshot : ModelSnapshot
+    [Migration("20191018220931_relationscita")]
+    partial class relationscita
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace citas.Migrations
 
                     b.Property<DateTime>("FechaRegistro");
 
-                    b.Property<int>("IdMedico");
+                    b.Property<int?>("IdMedico");
 
                     b.Property<string>("NombreCliente");
 
@@ -93,8 +95,7 @@ namespace citas.Migrations
                 {
                     b.HasOne("citas.Models.Medico", "Medicos")
                         .WithMany()
-                        .HasForeignKey("IdMedico")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("IdMedico");
                 });
 #pragma warning restore 612, 618
         }

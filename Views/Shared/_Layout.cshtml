@@ -16,9 +16,7 @@
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/js/fullcalendar/core/main.min.css" />
-    <link rel="stylesheet" href="~/js/fullcalendar/daygrid/main.min.css" />
-    <link rel="stylesheet" href="~/js/fullcalendar/timegrid/main.min.css" />
+    @RenderSection("Styles", required: false)
 </head>
 <body>
     <header>
@@ -71,15 +69,6 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/fullcalendar/core/main.min.js" asp-append-version="true"></script>
-    <script src="~/js/fullcalendar/interaction/main.min.js" asp-append-version="true"></script>
-    <script src="~/js/fullcalendar/daygrid/main.min.js" asp-append-version="true"></script>
-    <script src="~/js/fullcalendar/timegrid/main.min.js" asp-append-version="true"></script> 
-    <script src="~/js/fullcalendar/moment/main.min.js" asp-append-version="true"></script>
-    <script src="~/js/fullcalendar/core/locales/es.js" asp-append-version="true"></script>
-    <script src="~/js/fullcalendar/resource-common/main.min.js" asp-append-version="true"></script> 
-    <script src="~/js/fullcalendar/resource-daygrid/main.min.js" asp-append-version="true"></script> 
-    <script src="~/js/fullcalendar/resource-timegrid/main.min.js" asp-append-version="true"></script> 
     @RenderSection("Scripts", required: false)
 </body>
 </html>

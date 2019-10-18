@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace citas.Models
 {
@@ -7,6 +8,7 @@ namespace citas.Models
     {
         [Key]
         public int IdMedico { get; set; }
+        [Display(Name = "Médico")]
         public string Nombres { get; set; }
         public string Especialidad { get; set; }
         public string Correo { get; set; }

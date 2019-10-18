@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace citas.Models
 {
@@ -7,9 +9,15 @@ namespace citas.Models
     {
         [Key]
         public int IdCita { get; set; }
-        public int IdMedico { get; set; }    
+        public int IdMedico { get; set; }
+        
+        [ForeignKey("IdMedico")]
+        public virtual Medico Medicos { get; set; }
+        [Display(Name = "Fecha de Cita")]
         public DateTime FechaCita { get; set; }
+        [Display(Name = "Cliente")]
         public String NombreCliente { get; set; }
+        [Display(Name = "Correo Cliente")]
         public String CorreoCliente { get; set; }
         public int Duracion { get; set; }
         public String Tipo { get; set; }
