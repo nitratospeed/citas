@@ -27,5 +27,4 @@ d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\citas.Views.pdb
 d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\citas.dll
 d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\citas.pdb
 D:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\citas.csproj.CopyComplete
-d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\Razor\Views\calendar\index.g.cshtml.cs
 d:\dev-erojas\projects\netcore\mvc\citas\obj\Debug\netcoreapp2.2\Razor\Views\cita\index.g.cshtml.cs

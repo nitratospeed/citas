@@ -2966,13 +2966,8 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "Views\\Home\\Index.cshtml",
-      "TargetPath": "Views\\Home\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "Views\\calendar\\index.cshtml",
-      "TargetPath": "Views\\calendar\\index.cshtml",
+      "FilePath": "Views\\home\\index.cshtml",
+      "TargetPath": "Views\\home\\index.cshtml",
       "FileKind": "mvc"
     },
     {

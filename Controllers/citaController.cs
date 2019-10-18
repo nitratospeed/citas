@@ -10,7 +10,13 @@ namespace citas.Controllers
 {
     public class citacontroller : Controller
     {
-        public IActionResult index()
+        private readonly CitasContext _context;
+
+        public citacontroller(CitasContext context)
+        {
+            _context = context;
+        }
+        public IActionResult Index()
         {
             return View();
         }

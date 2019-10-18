@@ -8,8 +8,14 @@ using citas.Models;
 
 namespace citas.Controllers
 {
-    public class HomeController : Controller
+    public class homeController : Controller
     {
+        private readonly CitasContext _context;
+
+        public homeController(CitasContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
             return View();
