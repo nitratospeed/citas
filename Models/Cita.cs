@@ -18,7 +18,9 @@ namespace citas.Models
         [Display(Name = "Cliente")]
         public String NombreCliente { get; set; }
         [Display(Name = "Correo Cliente")]
+        public String Movil { get; set; }
         public String CorreoCliente { get; set; }
+        [Display(Name = "Duración")]
         public int Duracion { get; set; }
         public String Tipo { get; set; }
         public String Comentarios { get; set; }

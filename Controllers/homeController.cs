@@ -30,14 +30,21 @@ namespace citas.Controllers
 
         public JsonResult getListaCitas()
         {
-            var citas = _context.Citas.Where(x => x.FechaCita.Date.Month == DateTime.Now.Date.Month).Select( m => new 
+            var citas = _context.Citas.Include(x=>x.Medicos).Where(x => x.FechaCita.Date.Month == DateTime.Now.Date.Month).Select( m => new 
                         {
                             id = m.IdCita.ToString(),
                             resourceId = m.IdMedico.ToString(),
                             start = m.FechaCita,
                             end = m.FechaCita.AddMinutes(m.Duracion),
-                            title = m.NombreCliente
+                            title = m.NombreCliente,
+                            color = m.Medicos.Color,
                         }).ToList();
+            return Json(citas);
+        }
+
+        public JsonResult getCitaById(int IdCita)
+        {
+            var citas = _context.Citas.Find(IdCita);
             return Json(citas);
         }
 

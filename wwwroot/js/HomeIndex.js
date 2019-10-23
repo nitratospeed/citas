@@ -10,21 +10,30 @@ $(document).ready(function () {
       defaultDate: hoy,
       editable: true,
       selectable: true,
-      eventLimit: true, // allow "more" link when too many events
+      eventLimit: true,  
       header: {
         left: 'prev,next today',
         center: 'title',
         right: 'resourceTimeGridDay,timeGridWeek,dayGridMonth'
       },
-  
-      //// uncomment this line to hide the all-day slot
       allDaySlot: false,
       locale: 'es',
       resources: '/home/getListaMedicos',
       events: '/home/getListaCitas',
-  
+      eventTimeFormat: { 
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12:false
+      },
+      slotLabelFormat: {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12:false
+      },
+      minTime: "09:00:00",
+      maxTime: "20:00:00",
       select: function(arg) {
-        
+        document.getElementById("form-cita").reset();
         $('#modal-nueva-cita').modal('show')
   
   /*         calendar.addEvent({
@@ -36,14 +45,27 @@ $(document).ready(function () {
   
         calendar.unselect() */
       },
-  /*     dateClick: function(arg) {
-        console.log(
-          'dateClick',
-          arg.date,
-          arg.resource ? arg.resource.id : '(no resource)'
-        );
-      } */
+      eventClick: function(info) {
+        document.getElementById("form-cita").reset();
+        
+        $.getJSON('/home/getCitaById', 
+          {
+            IdCita: info.event.id
+          }, 
+          function(data) {
+            document.getElementById('IdCita').value = data.idCita
+            document.getElementById('IdMedico').value = data.idMedico
+            document.getElementById('FechaCita').value = data.fechaCita
+            document.getElementById('NombreCliente').value = data.nombreCliente
+            document.getElementById('CorreoCliente').value = data.correoCliente
+            document.getElementById('Duracion').value = data.duracion
+            document.getElementById('Tipo').value = data.tipo
+            document.getElementById('Comentarios').value = data.comentarios
+
+            $('#modal-nueva-cita').modal('show');
+          });
+        }
     });
-  
+
     calendar.render();
   });
