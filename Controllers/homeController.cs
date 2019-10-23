@@ -17,6 +17,30 @@ namespace citas.Controllers
         {
             _context = context;
         }
+        public JsonResult getListaMedicos()
+        {
+            var medicos = _context.Medicos.Select( m => new 
+                        {
+                            id = m.IdMedico.ToString(),
+                            title = m.Nombres,
+                            eventcolor = "green"
+                        }).ToList();
+            return Json(medicos);
+        }
+
+        public JsonResult getListaCitas()
+        {
+            var citas = _context.Citas.Where(x => x.FechaCita.Date.Month == DateTime.Now.Date.Month).Select( m => new 
+                        {
+                            id = m.IdCita.ToString(),
+                            resourceId = m.IdMedico.ToString(),
+                            start = m.FechaCita,
+                            end = m.FechaCita.AddMinutes(m.Duracion),
+                            title = m.NombreCliente
+                        }).ToList();
+            return Json(citas);
+        }
+
         public IActionResult Index()
         {
             return View();

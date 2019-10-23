@@ -1,11 +1,13 @@
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function () {
     var calendarEl = document.getElementById('calendar');
   
+    var hoy = new Date();
+
     var calendar = new FullCalendar.Calendar(calendarEl, {
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid' ],
       defaultView: 'dayGridMonth',
-      defaultDate: '2019-08-07',
+      defaultDate: hoy,
       editable: true,
       selectable: true,
       eventLimit: true, // allow "more" link when too many events
@@ -18,19 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
       //// uncomment this line to hide the all-day slot
       allDaySlot: false,
       locale: 'es',
-      resources: [
-        { id: 'a', title: 'Room A' },
-        { id: 'b', title: 'Room B', eventColor: 'green' },
-        { id: 'c', title: 'Room C', eventColor: 'orange' },
-        { id: 'd', title: 'Room D', eventColor: 'red' }
-      ],
-      events: [
-        { id: '1', resourceId: 'a', start: '2019-08-06', end: '2019-08-08', title: 'event 1' },
-        { id: '2', resourceId: 'a', start: '2019-08-07T09:00:00', end: '2019-08-07T14:00:00', title: 'event 2' },
-        { id: '3', resourceId: 'b', start: '2019-08-07T12:00:00', end: '2019-08-08T06:00:00', title: 'event 3' },
-        { id: '4', resourceId: 'c', start: '2019-08-07T07:30:00', end: '2019-08-07T09:30:00', title: 'event 4' },
-        { id: '5', resourceId: 'd', start: '2019-08-07T10:00:00', end: '2019-08-07T15:00:00', title: 'event 5' }
-      ],
+      resources: '/home/getListaMedicos',
+      events: '/home/getListaCitas',
   
       select: function(arg) {
         
