@@ -5,8 +5,19 @@
 <!-- <div id="medicos">
     <img src="~/images/Clip_A0_Group_76_pattern.png" alt="..." class="rounded-circle">
 </div>
+-->
 
-<hr> -->
+<form class="form-inline">
+  <label class="sr-only" for="IdMedicoBuscar">Médico</label>
+  <select class="custom-select my-1 mr-sm-2" id="IdMedicoBuscar">
+    <option value="0">Todos</option>
+  </select>
+  <label class="sr-only" for="NombreCliente">Cliente</label>
+  <input type="text" class="form-control mb-2 mr-sm-2" id="NombreCliente">
+  <button type="button" id="btn-filtrar" class="btn btn-primary mb-2">Filtrar</button>
+</form>
+
+<hr> 
 
 <div id='calendar'></div>
 
@@ -35,8 +46,7 @@
                 <input type="text" class="form-control" id="Movil">
               </div>
               <div class="form-group">
-                <label for="FechaCita">Fecha Cita</label>
-                <input type="date" class="form-control" id="FechaCita">
+                <input type="datetime" class="form-control" id="FechaCita">
               </div>
               <div class="form-group">
                 <label for="Duracion">Duración</label>
@@ -44,11 +54,7 @@
               </div>
               <div class="form-group">
                 <label for="IdMedico">Médico</label>
-                <select id="IdMedico" class="custom-select">
-                  <option>Seleccione</option>
-                  <option value="1">a</option>
-                  <option value="2">b</option>
-                </select>
+                <select id="IdMedico" class="custom-select"></select>
               </div>
               <div class="form-group">
                 <label for="Tipo">Tipo</label>
@@ -61,8 +67,8 @@
           </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Guardar</button>
+        <button id="btn-cancelar" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button id="btn-guardar" type="button" class="btn btn-primary">Guardar</button>
       </div>
     </div>
   </div>

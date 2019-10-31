@@ -8,21 +8,19 @@ namespace citas.Models
     public class Cita
     {
         [Key]
-        public int IdCita { get; set; }
+        public int IdCita { get; set; } 
         public int IdMedico { get; set; }
-        
+
         [ForeignKey("IdMedico")]
         public virtual Medico Medicos { get; set; }
-        [Display(Name = "Fecha de Cita")]
-        public DateTime FechaCita { get; set; }
-        [Display(Name = "Cliente")]
         public String NombreCliente { get; set; }
-        [Display(Name = "Correo Cliente")]
         public String Movil { get; set; }
         public String CorreoCliente { get; set; }
-        [Display(Name = "Duración")]
-        public int Duracion { get; set; }
-        public String Tipo { get; set; }
+        public DateTime FechaInicioCita { get; set; }
+        public DateTime FechaFinCita { get; set; }
+        public int IdTipo { get; set; }
+        [ForeignKey("IdTipo")]
+        public virtual Tipo Tipos { get; set; }
         public String Comentarios { get; set; }
         public DateTime FechaRegistro { get; set; }
     }

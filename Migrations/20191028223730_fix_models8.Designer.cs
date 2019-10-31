@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using citas.Models;
@@ -9,9 +10,10 @@ using citas.Models;
 namespace citas.Migrations
 {
     [DbContext(typeof(CitasContext))]
-    partial class CitasContextModelSnapshot : ModelSnapshot
+    [Migration("20191028223730_fix_models8")]
+    partial class fix_models8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,8 +47,6 @@ namespace citas.Migrations
                     b.HasKey("IdCita");
 
                     b.HasIndex("IdMedico");
-
-                    b.HasIndex("IdTipo");
 
                     b.ToTable("Citas");
                 });
@@ -97,22 +97,6 @@ namespace citas.Migrations
                     b.ToTable("Medicos");
                 });
 
-            modelBuilder.Entity("citas.Models.Tipo", b =>
-                {
-                    b.Property<int>("IdTipo")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Color");
-
-                    b.Property<string>("Descripcion");
-
-                    b.Property<DateTime>("FechaRegistro");
-
-                    b.HasKey("IdTipo");
-
-                    b.ToTable("Tipo");
-                });
-
             modelBuilder.Entity("citas.Models.Usuario", b =>
                 {
                     b.Property<int>("IdUsuario")
@@ -136,11 +120,6 @@ namespace citas.Migrations
                     b.HasOne("citas.Models.Medico", "Medicos")
                         .WithMany()
                         .HasForeignKey("IdMedico")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("citas.Models.Tipo", "Tipos")
-                        .WithMany()
-                        .HasForeignKey("IdTipo")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
