@@ -73,7 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
       select: function(arg) {
         document.getElementById("form-cita").reset();
-        document.getElementById('FechaCita').value = arg.startStr;
+        document.getElementById('FechaInicioCita').value = arg.startStr;
+        document.getElementById('FechaFinCita').value = arg.endStr;
         $('#modal-nueva-cita').modal('show');
           /*calendar.addEvent({
           title: title,
@@ -95,12 +96,12 @@ document.addEventListener('DOMContentLoaded', function() {
           function(data) {
             document.getElementById('IdCita').value = data.idCita
             document.getElementById('IdMedico').value = data.idMedico
-            document.getElementById('FechaCita').value = data.fechaCita.split('T')[0]
             document.getElementById('NombreCliente').value = data.nombreCliente
             document.getElementById('Movil').value = data.movil
             document.getElementById('CorreoCliente').value = data.correoCliente
-            document.getElementById('Duracion').value = data.duracion
-            document.getElementById('Tipo').value = data.tipo
+            document.getElementById('FechaInicioCita').value = data.fechaInicioCita
+            document.getElementById('FechaFinCita').value = data.fechaFinCita
+            document.getElementById('IdTipo').value = data.idTipo
             document.getElementById('Comentarios').value = data.comentarios
 
             $('#modal-nueva-cita').modal('show');
@@ -122,15 +123,18 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   $(document).on("click", '#btn-guardar', function (e) {
+
+    var xxy = document.getElementById('NombreCliente').value;
     $.post('/home/postCita', 
     {
+      IdCita: document.getElementById('IdCita').value,
       IdMedico: document.getElementById('IdMedico').value,
-      FechaCita: document.getElementById('FechaCita').value,
       NombreCliente: document.getElementById('NombreCliente').value,
-      Movil: document.getElementById('Movil').value,
       CorreoCliente: document.getElementById('CorreoCliente').value,
-      Duracion: document.getElementById('Duracion').value,
-      Tipo: document.getElementById('Tipo').value,
+      Movil: document.getElementById('Movil').value,
+      FechaInicioCita: document.getElementById('FechaInicioCita').value,
+      FechaFinCita: document.getElementById('FechaFinCita').value,
+      IdTipo: document.getElementById('IdTipo').value,
       Comentarios: document.getElementById('Comentarios').value
     }, 
     function(data) {

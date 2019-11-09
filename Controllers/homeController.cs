@@ -86,16 +86,15 @@ namespace citas.Controllers
                 nombre = "";      
             }
 
-            var citas = _context.Citas.Include(x=>x.Medicos)
+            var citas = _context.Citas.Include(x=>x.Medicos).Include(x=>x.Tipos)
                         .Select( m => new 
                             {
                             id = m.IdCita.ToString(),
                             resourceId = m.IdMedico.ToString(),
                             start = m.FechaInicioCita,
                             end = m.FechaFinCita,
-                            title = m.NombreCliente
-                            /* ,
-                            color = m.Tipos.Color, */
+                            title = m.NombreCliente,
+                            color = m.Tipos.Color,
                             }).ToList();
 
             if (nombre != "" && medico != 0)
@@ -126,12 +125,17 @@ namespace citas.Controllers
         public JsonResult postCita(Cita objCita)
         {
             try
-            {            
+            {
+                if (objCita.IdCita == 0){
                 objCita.FechaRegistro = DateTime.Now;
                 _context.Citas.Add(objCita);
                 _context.SaveChanges();
 
-                return Json("1");     
+                return Json("1");  
+                }
+                else{
+                    return Json("0");
+                }
             }
             catch (System.Exception)
             {        

@@ -12,8 +12,8 @@
   <select class="custom-select my-1 mr-sm-2" id="IdMedicoBuscar">
     <option value="0">Todos</option>
   </select>
-  <label class="sr-only" for="NombreCliente">Cliente</label>
-  <input type="text" class="form-control mb-2 mr-sm-2" id="NombreCliente">
+  <label class="sr-only" for="ClienteBuscar">Cliente</label>
+  <input type="text" class="form-control mb-2 mr-sm-2" id="ClienteBuscar">
   <button type="button" id="btn-filtrar" class="btn btn-primary mb-2">Filtrar</button>
 </form>
 
@@ -31,38 +31,40 @@
         </button>
       </div>
       <div class="modal-body">
-          <form id="form-cita">
-              <input type="hidden" id="IdCita">
+          <form id="form-cita" name="form-cita">
+              <input type="hidden" id="IdCita" name="IdCita">
               <div class="form-group">
                 <label for="NombreCliente">Nombre Cliente</label>
-                <input type="text" class="form-control" id="NombreCliente">
+                <input type="text" class="form-control" id="NombreCliente" name="NombreCliente">
               </div>
               <div class="form-group">
                 <label for="CorreoCliente">Correo</label>
-                <input type="email" class="form-control" id="CorreoCliente">
+                <input type="email" class="form-control" id="CorreoCliente" name="CorreoCliente">
               </div>
               <div class="form-group">
                 <label for="Movil">Móvil</label>
-                <input type="text" class="form-control" id="Movil">
+                <input type="text" class="form-control" id="Movil" name="Movil">
               </div>
               <div class="form-group">
-                <input type="datetime" class="form-control" id="FechaCita">
+                <label for="FechaInicioCita">Inicio Cita</label>
+                <input type="text" class="form-control" id="FechaInicioCita" name="FechaInicioCita">
               </div>
               <div class="form-group">
-                <label for="Duracion">Duración</label>
-                <input type="text" class="form-control" id="Duracion">
+                <label for="FechaFinCita">Fin Cita</label>
+                <input type="text" class="form-control" id="FechaFinCita" name="FechaFinCita">
               </div>
               <div class="form-group">
                 <label for="IdMedico">Médico</label>
-                <select id="IdMedico" class="custom-select"></select>
+                <select id="IdMedico" name="IdMedico" class="custom-select"></select>
               </div>
               <div class="form-group">
-                <label for="Tipo">Tipo</label>
-                <input type="text" class="form-control" id="Tipo">
+                <label for="IdTipo">Tipo</label>
+                <input type="text" class="form-control" id="IdTipo" name="IdTipo">
+                <!-- <select id="IdTipo" name="IdTipo" class="custom-select"></select> -->
               </div>
               <div class="form-group">
                 <label for="Comentarios">Comentarios</label>
-                <textarea id="Comentarios" class="form-control"></textarea>
+                <textarea id="Comentarios" name="Comentarios" class="form-control"></textarea>
               </div>
           </form>
       </div>

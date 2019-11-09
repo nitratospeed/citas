@@ -4,22 +4,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using citas.Models;
 
 namespace citas.Migrations
 {
     [DbContext(typeof(CitasContext))]
-    [Migration("20191023163458_agregado_horarios_colores")]
-    partial class agregado_horarios_colores
+    [Migration("20191109000759_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("citas.Models.Cita", b =>
                 {
@@ -30,23 +27,51 @@ namespace citas.Migrations
 
                     b.Property<string>("CorreoCliente");
 
-                    b.Property<int>("Duracion");
+                    b.Property<DateTime>("FechaFinCita");
 
-                    b.Property<DateTime>("FechaCita");
+                    b.Property<DateTime>("FechaInicioCita");
 
                     b.Property<DateTime>("FechaRegistro");
 
                     b.Property<int>("IdMedico");
 
-                    b.Property<string>("NombreCliente");
+                    b.Property<int>("IdTipo");
 
-                    b.Property<string>("Tipo");
+                    b.Property<string>("Movil");
+
+                    b.Property<string>("NombreCliente");
 
                     b.HasKey("IdCita");
 
                     b.HasIndex("IdMedico");
 
+                    b.HasIndex("IdTipo");
+
                     b.ToTable("Citas");
+                });
+
+            modelBuilder.Entity("citas.Models.Horario", b =>
+                {
+                    b.Property<int>("IdHorario")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Dia");
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<TimeSpan>("HoraFin");
+
+                    b.Property<TimeSpan>("HoraInicio");
+
+                    b.Property<int>("IdMedico");
+
+                    b.Property<int>("Sede");
+
+                    b.HasKey("IdHorario");
+
+                    b.HasIndex("IdMedico");
+
+                    b.ToTable("Horarios");
                 });
 
             modelBuilder.Entity("citas.Models.Medico", b =>
@@ -55,8 +80,6 @@ namespace citas.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Celular");
-
-                    b.Property<string>("Color");
 
                     b.Property<string>("Correo");
 
@@ -68,15 +91,27 @@ namespace citas.Migrations
 
                     b.Property<DateTime>("FechaRegistro");
 
-                    b.Property<TimeSpan>("HorarioFin");
-
-                    b.Property<TimeSpan>("HorarioInicio");
-
                     b.Property<string>("Nombres");
 
                     b.HasKey("IdMedico");
 
                     b.ToTable("Medicos");
+                });
+
+            modelBuilder.Entity("citas.Models.Tipo", b =>
+                {
+                    b.Property<int>("IdTipo")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Color");
+
+                    b.Property<string>("Descripcion");
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.HasKey("IdTipo");
+
+                    b.ToTable("Tipos");
                 });
 
             modelBuilder.Entity("citas.Models.Usuario", b =>
@@ -101,6 +136,19 @@ namespace citas.Migrations
                 {
                     b.HasOne("citas.Models.Medico", "Medicos")
                         .WithMany()
+                        .HasForeignKey("IdMedico")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("citas.Models.Tipo", "Tipos")
+                        .WithMany()
+                        .HasForeignKey("IdTipo")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("citas.Models.Horario", b =>
+                {
+                    b.HasOne("citas.Models.Medico")
+                        .WithMany("Horarios")
                         .HasForeignKey("IdMedico")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

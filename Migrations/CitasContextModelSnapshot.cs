@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using citas.Models;
 
 namespace citas.Migrations
@@ -15,9 +14,7 @@ namespace citas.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("citas.Models.Cita", b =>
                 {
@@ -66,11 +63,13 @@ namespace citas.Migrations
 
                     b.Property<int>("IdMedico");
 
+                    b.Property<int>("Sede");
+
                     b.HasKey("IdHorario");
 
                     b.HasIndex("IdMedico");
 
-                    b.ToTable("Horario");
+                    b.ToTable("Horarios");
                 });
 
             modelBuilder.Entity("citas.Models.Medico", b =>
@@ -110,7 +109,7 @@ namespace citas.Migrations
 
                     b.HasKey("IdTipo");
 
-                    b.ToTable("Tipo");
+                    b.ToTable("Tipos");
                 });
 
             modelBuilder.Entity("citas.Models.Usuario", b =>

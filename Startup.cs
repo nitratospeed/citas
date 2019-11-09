@@ -36,8 +36,11 @@ namespace citas
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //postgresql
+            /* services.AddDbContext<CitasContext>(options =>
+            options.UseNpgsql(Configuration.GetConnectionString("CitasContext"))); */
+            //mysql
             services.AddDbContext<CitasContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("CitasContext")));
+            options.UseMySQL(Configuration.GetConnectionString("CitasContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
