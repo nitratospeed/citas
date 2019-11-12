@@ -3,12 +3,22 @@ document.addEventListener('DOMContentLoaded', function() {
   $.getJSON('/home/getListaMedicos', 
    function(data) {
     html = "";
-    html = "<option value='0'></option>"
+    html = "<option value='0'>Todos</option>"
     for (var key in data) {
       html += "<option value=" + data[key].id + ">" + data[key].title + "</option>"
     }
     document.getElementById("IdMedico").innerHTML = html;
     document.getElementById("IdMedicoBuscar").innerHTML = html;
+  });
+
+  $.getJSON('/home/getListaTipos', 
+  function(data) {
+   html = "";
+   html = "<option value='0'>Seleccione</option>"
+   for (var key in data) {
+     html += "<option value=" + data[key].id + ">" + data[key].title + "</option>"
+   }
+   document.getElementById("IdTipo").innerHTML = html;
   });
 
   var calendarEl = document.getElementById('calendar');
@@ -18,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var calendar = new FullCalendar.Calendar(calendarEl, {
     schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
     plugins: ['interaction', 'resourceDayGrid', 'resourceTimeGrid'],
-    defaultView: 'dayGridMonth',
+    defaultView: 'resourceTimeGrid',
     defaultDate: hoy,
     editable: true,
     selectable: true,
@@ -30,8 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     allDaySlot: false,
     locale: 'es',
-    /*resources:
-    '/home/getListaMedicos',*/
+    contentHeight: 'auto',
+    eventLongPressDelay: 20,
+    selectLongPressDelay: 25,
+
     resources: function(fetchInfo, successCallback, failureCallback) {
       $.ajax({
         url: '/home/getListaMedicosById',
@@ -42,17 +54,13 @@ document.addEventListener('DOMContentLoaded', function() {
         successCallback(response);
       });
     },
-    /* events:
-    '/home/getListaCitas', */
+
     events: function(info, successCallback, failureCallback) {
       $.ajax({
         url: '/home/getListaCitas',
         data: {
           nombre: $('#ClienteBuscar').val(),
           medico: $('#IdMedicoBuscar').val()
-/*           ,
-          start: start.format("YYYY-MM-DD"),
-          end: end.format("YYYY-MM-DD"), */
         }
       }).done(function(response) {
         successCallback(response);
@@ -71,42 +79,34 @@ document.addEventListener('DOMContentLoaded', function() {
     minTime: "09:00:00",
     maxTime: "20:00:00",
 
-      select: function(arg) {
-        document.getElementById("form-cita").reset();
-        document.getElementById('FechaInicioCita').value = arg.startStr;
-        document.getElementById('FechaFinCita').value = arg.endStr;
-        $('#modal-nueva-cita').modal('show');
-          /*calendar.addEvent({
-          title: title,
-          start: arg.start,
-          end: arg.end,
-          allDay: arg.allDay
-          })
+    select: function(arg) {
+      document.getElementById("form-cita").reset();
+      document.getElementById('FechaInicioCita').value = arg.startStr.replace('T',' ').substring(0, 16);
+      document.getElementById('FechaFinCita').value = arg.endStr.replace('T',' ').substring(0, 16);
+      document.getElementById("IdMedico").value = arg.resource.id;
+      $('#modal-nueva-cita').modal('show');
+    },
 
-          calendar.unselect() */
-      },
+    eventClick: function(info) {
+      document.getElementById("form-cita").reset(); 
+      $.getJSON('/home/getCitaById', 
+        {
+          IdCita: info.event.id
+        }, 
+        function(data) {
+          document.getElementById('IdCita').value = data.idCita;
+          document.getElementById('IdMedico').value = data.idMedico;
+          document.getElementById('NombreCliente').value = data.nombreCliente;
+          document.getElementById('Movil').value = data.movil;
+          document.getElementById('CorreoCliente').value = data.correoCliente;
+          document.getElementById('FechaInicioCita').value = data.fechaInicioCita.replace('T',' ').substring(0, 16);
+          document.getElementById('FechaFinCita').value = data.fechaFinCita.replace('T',' ').substring(0, 16);
+          document.getElementById('IdTipo').value = data.idTipo;
+          document.getElementById('Comentarios').value = data.comentarios;
 
-      eventClick: function(info) {
-        document.getElementById("form-cita").reset();
-        
-        $.getJSON('/home/getCitaById', 
-          {
-            IdCita: info.event.id
-          }, 
-          function(data) {
-            document.getElementById('IdCita').value = data.idCita
-            document.getElementById('IdMedico').value = data.idMedico
-            document.getElementById('NombreCliente').value = data.nombreCliente
-            document.getElementById('Movil').value = data.movil
-            document.getElementById('CorreoCliente').value = data.correoCliente
-            document.getElementById('FechaInicioCita').value = data.fechaInicioCita
-            document.getElementById('FechaFinCita').value = data.fechaFinCita
-            document.getElementById('IdTipo').value = data.idTipo
-            document.getElementById('Comentarios').value = data.comentarios
-
-            $('#modal-nueva-cita').modal('show');
-          });
-        }
+          $('#modal-nueva-cita').modal('show');
+        });
+      }
     });
 
     $('#modal-nueva-cita').on('hidden.bs.modal', function() {
@@ -124,7 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   $(document).on("click", '#btn-guardar', function (e) {
 
-    var xxy = document.getElementById('NombreCliente').value;
     $.post('/home/postCita', 
     {
       IdCita: document.getElementById('IdCita').value,
@@ -146,4 +145,3 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-

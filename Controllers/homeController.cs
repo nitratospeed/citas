@@ -59,20 +59,6 @@ namespace citas.Controllers
             return Json(medicos);
         }
 
-/*         public JsonResult getListaCitas()
-        {
-            var citas = _context.Citas.Include(x=>x.Medicos).Where(x => x.FechaCita.Date.Month == DateTime.Now.Date.Month).Select( m => new 
-                        {
-                            id = m.IdCita.ToString(),
-                            resourceId = m.IdMedico.ToString(),
-                            start = m.FechaCita,
-                            end = m.FechaCita.AddMinutes(m.Duracion),
-                            title = m.NombreCliente,
-                            color = m.Medicos.Color,
-                        }).ToList();
-            return Json(citas);
-        } */
-
         public JsonResult getCitaById(int IdCita)
         {
             var citas = _context.Citas.Find(IdCita);
@@ -122,6 +108,17 @@ namespace citas.Controllers
             }
         }
         
+        public JsonResult getListaTipos()
+        {
+            var tipos = _context.Tipos.Select( t => new 
+            {
+                id = t.IdTipo.ToString(),
+                title = t.Descripcion
+            }).ToList();
+
+            return Json(tipos);
+        }
+
         public JsonResult postCita(Cita objCita)
         {
             try
