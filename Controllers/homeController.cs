@@ -23,16 +23,23 @@ namespace citas.Controllers
             return View();
         }
 
-        public JsonResult getListaMedicos()
+        public IActionResult getListaMedicos()
         {
-            var medicos = _context.Medicos.Select( m => new 
+            try
             {
-                id = m.IdMedico.ToString(),
-                title = m.Nombres,
-                eventcolor = "green"
-            }).ToList();
+                var medicos = _context.Medicos.Select( m => new 
+                {
+                    id = m.IdMedico.ToString(),
+                    title = m.Nombres,
+                    eventcolor = "green"
+                }).ToList();
 
-            return Json(medicos);
+                return Ok(medicos);        
+            }
+            catch (System.Exception)
+            {
+                return BadRequest();
+            }
         }
 
         public JsonResult getListaMedicosById(int medico)
@@ -137,6 +144,21 @@ namespace citas.Controllers
             catch (System.Exception)
             {        
                 return Json("0");
+            }
+        }
+
+        public IActionResult deleteCita(int idCita)
+        {
+            try
+            {
+                var cita = _context.Citas.Find(idCita);
+                _context.Citas.Remove(cita);
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return BadRequest(idCita);
             }
         }
 

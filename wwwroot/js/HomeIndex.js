@@ -1,6 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-  $.getJSON('/home/getListaMedicos', 
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", '/home/getListaMedicos', true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        html = "";
+        html = "<option value='0'>Todos</option>"
+        for (var key in this.response) {
+          html += "<option value=" + this.response[key].id + ">" + this.response[key].title + "</option>"
+        }
+        document.getElementById("IdMedico").innerHTML = html;
+        document.getElementById("IdMedicoBuscar").innerHTML = html;
+      }
+      else if (this.readyState === XMLHttpRequest.DONE && this.status != 200) {
+        alert('Ocurrió un error.');
+      }
+  }
+  xhr.send();
+
+/*   $.getJSON('/home/getListaMedicos', 
    function(data) {
     html = "";
     html = "<option value='0'>Todos</option>"
@@ -9,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     document.getElementById("IdMedico").innerHTML = html;
     document.getElementById("IdMedicoBuscar").innerHTML = html;
-  });
+  }); */
 
   $.getJSON('/home/getListaTipos', 
   function(data) {
@@ -84,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('FechaInicioCita').value = arg.startStr.replace('T',' ').substring(0, 16);
       document.getElementById('FechaFinCita').value = arg.endStr.replace('T',' ').substring(0, 16);
       document.getElementById("IdMedico").value = arg.resource.id;
+      document.getElementById("IdTipo").value = 1;
       $('#modal-nueva-cita').modal('show');
     },
 
@@ -145,3 +165,21 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  document.getElementById("btn-cancelar").onclick = function fun() {
+
+    var idCita = document.getElementById('IdCita').value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/home/deleteCita', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          $('#modal-nueva-cita').modal('hide');
+        }
+        else if (this.readyState === XMLHttpRequest.DONE && this.status != 200) {
+          alert('Ocurrió un error.');
+        }
+    }
+    xhr.send("idCita="+idCita);
+  };
