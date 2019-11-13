@@ -56,13 +56,22 @@
                 <input type="text" class="form-control" id="Movil" name="Movil">
               </div>
               <div class="form-group">
-                <label for="FechaInicioCita">Inicio Cita</label>
+                <label for="FechaInicioCita">Fecha Cita</label>
                 <input type="text" class="form-control" id="FechaInicioCita" name="FechaInicioCita">
               </div>
               <div class="form-group">
-                <label for="FechaFinCita">Fin Cita</label>
+                <label for="FechaFinCita">Fecha Cita</label>
                 <input type="text" class="form-control" id="FechaFinCita" name="FechaFinCita">
               </div>
+<!--               <div class="form-group">
+                <label for="Duracion">Duración</label>
+                <select id="Duracion" name="Duracion" class="custom-select">
+                  <option value="30">30 min</option>
+                  <option value="45">45 min</option>
+                  <option value="60">60 min</option>
+                  <option value="90">90 min</option>
+                </select>
+              </div> -->
               <div class="form-group">
                 <label for="IdMedico">Médico</label>
                 <select id="IdMedico" name="IdMedico" class="custom-select"></select>
@@ -78,8 +87,9 @@
           </form>
       </div>
       <div class="modal-footer">
-        <button id="btn-cancelar" type="button" class="btn btn-danger">Cancelar</button>
+        <button id="btn-cancelar" type="button" class="btn btn-danger">Eliminar</button>
         <button id="btn-guardar" type="button" class="btn btn-primary">Guardar</button>
+        <button id="btn-actualizar" type="button" class="btn btn-primary" style="display: none;">Actualizar</button>
       </div>
     </div>
   </div>

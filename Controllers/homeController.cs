@@ -147,6 +147,20 @@ namespace citas.Controllers
             }
         }
 
+        public IActionResult updateCita(Cita objCita)
+        {
+            try
+            {
+                _context.Update(objCita);
+                _context.SaveChanges();
+                return Json("1");  
+            }
+            catch (System.Exception)
+            {
+                return Json("0");  
+            }
+        }
+
         public IActionResult deleteCita(int idCita)
         {
             try
