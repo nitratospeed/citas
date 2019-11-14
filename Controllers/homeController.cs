@@ -132,6 +132,7 @@ namespace citas.Controllers
             {
                 if (objCita.IdCita == 0){
                 objCita.FechaRegistro = DateTime.Now;
+                objCita.FechaFinCita = objCita.FechaInicioCita.AddMinutes(objCita.Duracion);
                 _context.Citas.Add(objCita);
                 _context.SaveChanges();
 
@@ -151,6 +152,7 @@ namespace citas.Controllers
         {
             try
             {
+                objCita.FechaFinCita = objCita.FechaInicioCita.AddMinutes(objCita.Duracion);
                 _context.Update(objCita);
                 _context.SaveChanges();
                 return Json("1");  

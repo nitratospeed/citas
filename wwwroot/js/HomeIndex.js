@@ -1,28 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-
-/*   var xhr = new XMLHttpRequest();
-  xhr.open("GET", '/home/getListaMedicos', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onload = function() {
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-      var data = JSON.parse(this.response);
-      html = "";
-      html = "<option value='0'>Todos</option>"
-      for (var key in data) {
-        html += "<option value=" + data[key].id + ">" + data[key].title + "</option>"
-      }
-      document.getElementById("IdMedico").innerHTML = html;
-      document.getElementById("IdMedicoBuscar").innerHTML = html;
-    }
-    else if (this.readyState === XMLHttpRequest.DONE && this.status != 200) {
-      alert('Ocurrió un error.');
-    }
-  }
-  xhr.onerror = function() {
-    alert('Error');
-  };
-  xhr.send(); */
-
   $.getJSON('/home/getListaMedicos', 
    function(data) {
     html = "";
@@ -105,10 +81,15 @@ document.addEventListener('DOMContentLoaded', function() {
     select: function(arg) {
       document.getElementById("form-cita").reset();
       document.getElementById('btn-actualizar').style.display = 'none';
+      document.getElementById('btn-cancelar').style.display = 'none';
       document.getElementById('btn-guardar').style.display = 'block';
       document.getElementById('FechaInicioCita').value = arg.startStr.replace('T',' ').substring(0, 16);
-      document.getElementById('FechaFinCita').value = arg.endStr.replace('T',' ').substring(0, 16);   
+      //document.getElementById('FechaFinCita').value = arg.endStr.replace('T',' ').substring(0, 16);   
       document.getElementById("IdTipo").value = 1;
+
+      var restaFechas = Math.abs(new Date(arg.endStr.replace('T',' ').substring(0, 16)) - new Date(arg.startStr.replace('T',' ').substring(0, 16)));
+      var minutos = Math.floor(restaFechas / 60000);
+      document.getElementById("Duracion").value = minutos;
 
       if (arg.resource != null) {
         document.getElementById("IdMedico").value = arg.resource.id;
@@ -130,33 +111,32 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('Movil').value = data.movil;
           document.getElementById('CorreoCliente').value = data.correoCliente;
           document.getElementById('FechaInicioCita').value = data.fechaInicioCita.replace('T',' ').substring(0, 16);
-          document.getElementById('FechaFinCita').value = data.fechaFinCita.replace('T',' ').substring(0, 16);
+          //document.getElementById('FechaFinCita').value = data.fechaFinCita.replace('T',' ').substring(0, 16);
+          document.getElementById('Duracion').value = data.duracion;
           document.getElementById('IdTipo').value = data.idTipo;
           document.getElementById('Comentarios').value = data.comentarios;
           document.getElementById('btn-guardar').style.display = 'none';
           document.getElementById('btn-actualizar').style.display = 'block';
+          document.getElementById('btn-cancelar').style.display = 'block';
           $('#modal-nueva-cita').modal('show');
         });
       }
-    });
-
-    $('#modal-nueva-cita').on('hidden.bs.modal', function() {
-      calendar.refetchEvents();
-      calendar.refetchResources();
-    });
-
-    $('#btn-filtrar').on('click', function() {
-      calendar.refetchEvents();
-      calendar.refetchResources();
-      var fechacita = calendar.getEvents();
-      console.log(fechacita);
-    });
-
-    calendar.render();
   });
 
-  $(document).on("click", '#btn-guardar', function (e) {
+  $('#modal-nueva-cita').on('hidden.bs.modal', function() {
+    calendar.refetchEvents();
+    calendar.refetchResources();
+  });
 
+  $('#btn-filtrar').on('click', function() {
+    calendar.refetchEvents();
+    calendar.refetchResources();
+  });
+
+  calendar.render();
+});
+
+$(document).on("click", '#btn-guardar', function (e) {
     $.post('/home/postCita', 
     {
       IdCita: document.getElementById('IdCita').value,
@@ -165,7 +145,8 @@ document.addEventListener('DOMContentLoaded', function() {
       CorreoCliente: document.getElementById('CorreoCliente').value,
       Movil: document.getElementById('Movil').value,
       FechaInicioCita: document.getElementById('FechaInicioCita').value,
-      FechaFinCita: document.getElementById('FechaFinCita').value,
+      //FechaFinCita: document.getElementById('FechaFinCita').value,
+      Duracion: document.getElementById('Duracion').value,
       IdTipo: document.getElementById('IdTipo').value,
       Comentarios: document.getElementById('Comentarios').value
     }, 
@@ -179,50 +160,49 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  document.getElementById("btn-actualizar").onclick = function (e) {
-
-    $.post('/home/updateCita', 
-    {
-      IdCita: document.getElementById('IdCita').value,
-      IdMedico: document.getElementById('IdMedico').value,
-      NombreCliente: document.getElementById('NombreCliente').value,
-      CorreoCliente: document.getElementById('CorreoCliente').value,
-      Movil: document.getElementById('Movil').value,
-      FechaInicioCita: document.getElementById('FechaInicioCita').value,
-      FechaFinCita: document.getElementById('FechaFinCita').value,
-      IdTipo: document.getElementById('IdTipo').value,
-      Comentarios: document.getElementById('Comentarios').value
-    },
-    function(data) {
-      if (data = "1") {
-        $('#modal-nueva-cita').modal('hide');
-      }
-      else{
-        alert('Error al actualizar cita');
-      }
-    });
-  };
-
-  document.getElementById("btn-cancelar").onclick = function (e) {
-    var result = confirm("¿Estás seguro de eliminar esta cita?");
-    if (result) {
-      var idCita = document.getElementById('IdCita').value;
-
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", '/home/deleteCita', true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      xhr.onload = function() {
-          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            $('#modal-nueva-cita').modal('hide');
-          }
-          else if (this.readyState === XMLHttpRequest.DONE && this.status != 200) {
-            alert('Ocurrió un error.');
-          }
-      };
-      xhr.onerror = function() {
-        alert('Error');
-      };
-      xhr.send("idCita="+idCita);
+document.getElementById("btn-actualizar").onclick = function (e) {
+  $.post('/home/updateCita', 
+  {
+    IdCita: document.getElementById('IdCita').value,
+    IdMedico: document.getElementById('IdMedico').value,
+    NombreCliente: document.getElementById('NombreCliente').value,
+    CorreoCliente: document.getElementById('CorreoCliente').value,
+    Movil: document.getElementById('Movil').value,
+    FechaInicioCita: document.getElementById('FechaInicioCita').value,
+    //FechaFinCita: document.getElementById('FechaFinCita').value,
+    Duracion: document.getElementById('Duracion').value,
+    IdTipo: document.getElementById('IdTipo').value,
+    Comentarios: document.getElementById('Comentarios').value
+  },
+  function(data) {
+    if (data = "1") {
+      $('#modal-nueva-cita').modal('hide');
     }
+    else{
+      alert('Error al actualizar cita');
+    }
+  });
+};
 
-  };
+document.getElementById("btn-cancelar").onclick = function (e) {
+  var result = confirm("¿Estás seguro de eliminar esta cita?");
+  if (result) {
+    var idCita = document.getElementById('IdCita').value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/home/deleteCita', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onload = function() {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          $('#modal-nueva-cita').modal('hide');
+        }
+        else if (this.readyState === XMLHttpRequest.DONE && this.status != 200) {
+          alert('Ocurrió un error.');
+        }
+    };
+    xhr.onerror = function() {
+      alert('Error');
+    };
+    xhr.send("idCita="+idCita);
+  }
+};

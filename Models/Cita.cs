@@ -18,6 +18,7 @@ namespace citas.Models
         public String CorreoCliente { get; set; }
         public DateTime FechaInicioCita { get; set; }
         public DateTime FechaFinCita { get; set; }
+        public int Duracion { get; set; }
         public int IdTipo { get; set; }
         [ForeignKey("IdTipo")]
         public virtual Tipo Tipos { get; set; }
