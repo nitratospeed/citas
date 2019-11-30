@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
-  $.getJSON('/home/getListaMedicos', 
-   function(data) {
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', '/home/getListaMedicos');
+  xhr.responseType = 'json';
+  xhr.send();
+  xhr.onload = function() {
+    var data = xhr.response
     html = "";
     html = "<option value='0'>Todos</option>"
     for (var key in data) {
@@ -8,17 +12,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     document.getElementById("IdMedico").innerHTML = html;
     document.getElementById("IdMedicoBuscar").innerHTML = html;
-  });
+  };
+  xhr.onerror = function() {
+    alert('Error getListaMedicos');
+  };
 
-  $.getJSON('/home/getListaTipos', 
-  function(data) {
-   html = "";
-   html = "<option value='0'>Seleccione</option>"
-   for (var key in data) {
-     html += "<option value=" + data[key].id + ">" + data[key].title + "</option>"
-   }
-   document.getElementById("IdTipo").innerHTML = html;
-  });
+  let xhr2 = new XMLHttpRequest();
+  xhr2.open('GET', '/home/getListaTipos');
+  xhr2.responseType = 'json';
+  xhr2.send();
+  xhr2.onload = function() {
+    var data = xhr2.response
+    html = "";
+    html = "<option value='0'>Seleccione</option>"
+    for (var key in data) {
+      html += "<option value=" + data[key].id + ">" + data[key].title + "</option>"
+    }
+    document.getElementById("IdTipo").innerHTML = html;
+  };
+  xhr2.onerror = function() {
+    alert('Error getListaTipos');
+  };
 
   var calendarEl = document.getElementById('calendar');
 
@@ -44,26 +58,36 @@ document.addEventListener('DOMContentLoaded', function() {
     selectLongPressDelay: 25,
 
     resources: function(fetchInfo, successCallback, failureCallback) {
-      $.ajax({
-        url: '/home/getListaMedicosById',
-        data: {
-          medico: $('#IdMedicoBuscar').val()
-        }
-      }).done(function(response) {
-        successCallback(response);
+      let xhr = new XMLHttpRequest();
+      let json = JSON.stringify({
+        medico: document.getElementById("IdMedicoBuscar").value
       });
+      xhr.open('POST', '/home/getListaMedicosById');
+      xhr.responseType = 'json';
+      xhr.send(json);
+      xhr.onload = function() {
+        successCallback(xhr.response);
+      };
+      xhr.onerror = function() {
+        alert('Error getListaMedicosById');
+      };
     },
 
     events: function(info, successCallback, failureCallback) {
-      $.ajax({
-        url: '/home/getListaCitas',
-        data: {
-          nombre: $('#ClienteBuscar').val(),
-          medico: $('#IdMedicoBuscar').val()
-        }
-      }).done(function(response) {
-        successCallback(response);
-      })
+      let xhr = new XMLHttpRequest();
+      let json = JSON.stringify({
+        nombre: document.getElementById("ClienteBuscar").value,
+        medico: document.getElementById("IdMedicoBuscar").value
+      });
+      xhr.open('GET', '/home/getListaCitas');
+      xhr.responseType = 'json';
+      xhr.send(json);
+      xhr.onload = function() {
+        successCallback(xhr.response);
+      };
+      xhr.onerror = function() {
+        alert('Error getListaCitas');
+      };
     },
     eventTimeFormat: {
       hour: '2-digit',
@@ -93,14 +117,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (arg.resource != null) {
         document.getElementById("IdMedico").value = arg.resource.id;
-        $('#modal-nueva-cita').modal('show');
+        //$('#modal-nueva-cita').modal('show');
+        document.getElementById('modal-nueva-cita').classList.add('is-active');
       }
 
     },
 
     eventClick: function(info) {
       document.getElementById("form-cita").reset(); 
-      $.getJSON('/home/getCitaById', 
+/*       $.getJSON('/home/getCitaById', 
         {
           IdCita: info.event.id
         }, 
@@ -119,69 +144,84 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('btn-actualizar').style.display = 'block';
           document.getElementById('btn-cancelar').style.display = 'block';
           $('#modal-nueva-cita').modal('show');
-        });
+        }); */
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/home/getCitaById');
+        xhr.responseType = 'json';
+        xhr.send(info.event.id);
+        xhr.onload = function() {
+          var data = xhr.response;
+          document.getElementById('IdCita').value = data.idCita;
+          document.getElementById('IdMedico').value = data.idMedico;
+          document.getElementById('NombreCliente').value = data.nombreCliente;
+          document.getElementById('Movil').value = data.movil;
+          document.getElementById('CorreoCliente').value = data.correoCliente;
+          document.getElementById('FechaInicioCita').value = data.fechaInicioCita.replace('T',' ').substring(0, 16);
+          //document.getElementById('FechaFinCita').value = data.fechaFinCita.replace('T',' ').substring(0, 16);
+          document.getElementById('Duracion').value = data.duracion;
+          document.getElementById('IdTipo').value = data.idTipo;
+          document.getElementById('Comentarios').value = data.comentarios;
+          document.getElementById('btn-guardar').style.display = 'none';
+          document.getElementById('btn-actualizar').style.display = 'block';
+          document.getElementById('btn-cancelar').style.display = 'block';
+
+          document.getElementById('modal-nueva-cita').classList.add('is-active');
+        };
+        xhr.onerror = function() {
+          alert('Error getCitaById');
+        };
       }
   });
 
-  $('#modal-nueva-cita').on('hidden.bs.modal', function() {
+/*   $('#modal-nueva-cita').on('hidden.bs.modal', function() {
     calendar.refetchEvents();
     calendar.refetchResources();
-  });
+  }); */
 
-  $('#btn-filtrar').on('click', function() {
+  document.getElementById("btn-filtrar").onclick = function (e) {
     calendar.refetchEvents();
     calendar.refetchResources();
-  });
+  };
 
   calendar.render();
 });
 
-$(document).on("click", '#btn-guardar', function (e) {
-    $.post('/home/postCita', 
-    {
-      IdCita: document.getElementById('IdCita').value,
-      IdMedico: document.getElementById('IdMedico').value,
-      NombreCliente: document.getElementById('NombreCliente').value,
-      CorreoCliente: document.getElementById('CorreoCliente').value,
-      Movil: document.getElementById('Movil').value,
-      FechaInicioCita: document.getElementById('FechaInicioCita').value,
-      //FechaFinCita: document.getElementById('FechaFinCita').value,
-      Duracion: document.getElementById('Duracion').value,
-      IdTipo: document.getElementById('IdTipo').value,
-      Comentarios: document.getElementById('Comentarios').value
-    }, 
-    function(data) {
+document.getElementById("btn-guardar").onclick = function (e) {
+    let xhr = new XMLHttpRequest();
+    var form_data = new FormData(document.getElementById("form-cita"));
+    xhr.open('POST', '/home/postCita');
+    xhr.send(form_data);
+    xhr.onload = function() {
+      var data = xhr.response;
       if (data = "1") {
-        $('#modal-nueva-cita').modal('hide');
+        document.getElementById('modal-nueva-cita').classList.remove('is-active');
       }
       else{
         alert('Error al guardar cita');
       }
-    });
-  });
+    };
+    xhr.onerror = function() {
+      alert('Error postCita');
+    };
+  };
 
 document.getElementById("btn-actualizar").onclick = function (e) {
-  $.post('/home/updateCita', 
-  {
-    IdCita: document.getElementById('IdCita').value,
-    IdMedico: document.getElementById('IdMedico').value,
-    NombreCliente: document.getElementById('NombreCliente').value,
-    CorreoCliente: document.getElementById('CorreoCliente').value,
-    Movil: document.getElementById('Movil').value,
-    FechaInicioCita: document.getElementById('FechaInicioCita').value,
-    //FechaFinCita: document.getElementById('FechaFinCita').value,
-    Duracion: document.getElementById('Duracion').value,
-    IdTipo: document.getElementById('IdTipo').value,
-    Comentarios: document.getElementById('Comentarios').value
-  },
-  function(data) {
+  let xhr = new XMLHttpRequest();
+  var form_data = new FormData(document.getElementById("form-cita"));
+  xhr.open('POST', '/home/updateCita');
+  xhr.send(form_data);
+  xhr.onload = function() {
+    var data = xhr.response;
     if (data = "1") {
-      $('#modal-nueva-cita').modal('hide');
+      document.getElementById('modal-nueva-cita').classList.remove('is-active');
     }
     else{
-      alert('Error al actualizar cita');
+      alert('Error al guardar cita');
     }
-  });
+  };
+  xhr.onerror = function() {
+    alert('Error updateCita');
+  };
 };
 
 document.getElementById("btn-cancelar").onclick = function (e) {

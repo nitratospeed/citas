@@ -7,12 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
       for (var key in data) {
         var tr = document.createElement('tr');
         tr.innerHTML = 
-        '<td>' + data[key].nombres + '</td>' +
-        '<td>' + data[key].especialidad + '</td>' +
-        '<td>' + data[key].correo + '</td>' +
-        '<td>' + data[key].celular + '</td>' +
-        '<td>' + data[key].direccion + '</td>' +
-        '<td>' + data[key].fechaNac + '</td>';
+        '<td>' + data[key].nombres + '</td>';
         table.appendChild(tr);  
         }
     });
