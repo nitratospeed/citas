@@ -1,4 +1,9 @@
-﻿.navbar {
+﻿.container.is-fluid {
+    padding-left: 0em;
+    padding-right: 0em;
+}
+
+.navbar {
     margin-bottom: 1em;
 }
 
@@ -8,6 +13,9 @@
 }
 
 .card {
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin: 1em;
+}
+
+.modal-card {
+    padding: 1em;
 }
