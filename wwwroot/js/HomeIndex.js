@@ -13,7 +13,7 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
   header: {
     left: 'prev,next today',
     center: 'title',
-    right: 'resourceTimeGridDay,timeGridWeek,dayGridMonth'
+    right: 'resourceTimeGridDay,dayGridMonth'
   },
   allDaySlot: false,
   locale: 'es',
