@@ -66,9 +66,9 @@ namespace citas.Controllers
             return Json(medicos);
         }
 
-        public JsonResult getCitaById(int IdCita)
+        public JsonResult getCitaById(int idcita)
         {
-            var citas = _context.Citas.Find(IdCita);
+            var citas = _context.Citas.Find(idcita);
             return Json(citas);
         }
 
