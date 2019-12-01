@@ -25,7 +25,7 @@ namespace citas.Controllers
 
         public JsonResult getListaMedicos()
         {
-            var medicos = _context.Medicos.Include(x=>x.Horarios).ToList();
+            var medicos = _context.Medicos.AsNoTracking().Include(x=>x.Horarios).ToList();
 
             return Json(medicos);
         }
