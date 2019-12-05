@@ -17,9 +17,16 @@
 }
 
 .modal-card {
-    padding: 1em;
+    box-shadow: 0 0px 20px rgba(0,0,0,0.19), 0 0px 20px rgba(0,0,0,0.19);
+    width: 30em;
+    max-width: calc(100vh - 40px);
+    border-radius: 0.5em;
 }
 
 .card-content {
     padding: 1em;
+}
+
+.modal-background {
+    background-color: transparent;
 }
