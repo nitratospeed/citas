@@ -18,8 +18,7 @@
 
 .modal-card {
     box-shadow: 0 0px 20px rgba(0,0,0,0.19), 0 0px 20px rgba(0,0,0,0.19);
-    width: 30em;
-    max-width: calc(100vh - 40px);
+    max-width: fit-content;
     border-radius: 0.5em;
 }
 
