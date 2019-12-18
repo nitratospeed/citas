@@ -18,8 +18,8 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
   allDaySlot: false,
   locale: 'es',
   contentHeight: 'auto',
-  eventLongPressDelay: 20,
-  selectLongPressDelay: 25,
+  eventLongPressDelay: 30,
+  selectLongPressDelay: 30,
 
   resources: function(fetchInfo, successCallback, failureCallback) {
     let xhr = new XMLHttpRequest();
@@ -100,6 +100,7 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
       var data = xhr.response;
       document.getElementById('IdCita').value = data.idCita;
       document.getElementById('IdMedico').value = data.idMedico;
+      document.getElementById('DNI').value = data.dni;
       document.getElementById('NombreCliente').value = data.nombreCliente;
       document.getElementById('Movil').value = data.movil;
       document.getElementById('CorreoCliente').value = data.correoCliente;

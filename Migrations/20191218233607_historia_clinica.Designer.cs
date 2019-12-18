@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using citas.Models;
 
 namespace citas.Migrations
 {
     [DbContext(typeof(CitasContext))]
-    partial class CitasContextModelSnapshot : ModelSnapshot
+    [Migration("20191218233607_historia_clinica")]
+    partial class historia_clinica
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
