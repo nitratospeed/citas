@@ -14,5 +14,6 @@ namespace citas.Models
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Horario> Horarios { get; set; }
         public DbSet<Tipo> Tipos { get; set; }
+        public DbSet<HistoriaClinica> HistoriaClinicas { get; set; }
     }
 }

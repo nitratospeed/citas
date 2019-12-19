@@ -80,6 +80,8 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
 
     if (arg.resource != null) {
       document.getElementById("IdMedico").value = arg.resource.id;
+      document.getElementById('DNI_help').style.display = 'none';
+      document.getElementById('DNI_required').style.display = 'none';
       document.getElementById('modal-nueva-cita').classList.add('is-active');
     }
 
@@ -101,9 +103,10 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
       document.getElementById('IdCita').value = data.idCita;
       document.getElementById('IdMedico').value = data.idMedico;
       document.getElementById('DNI').value = data.dni;
-      document.getElementById('NombreCliente').value = data.nombreCliente;
-      document.getElementById('Movil').value = data.movil;
-      document.getElementById('CorreoCliente').value = data.correoCliente;
+      document.getElementById('Pago').checked = ((data.pago == "on") ? true : false);
+      document.getElementById('Nombre').value = data.nombre;
+      document.getElementById('Celular').value = data.celular;
+      document.getElementById('Correo').value = data.correo;
       document.getElementById('FechaInicioCita').value = data.fechaInicioCita.replace('T',' ').substring(0, 16);
       //document.getElementById('FechaFinCita').value = data.fechaFinCita.replace('T',' ').substring(0, 16);
       document.getElementById('Duracion').value = data.duracion;
@@ -112,6 +115,8 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
       document.getElementById('btn-guardar').style.display = 'none';
       document.getElementById('btn-actualizar').style.display = 'block';
       document.getElementById('btn-cancelar').style.display = 'block';
+      document.getElementById('DNI_help').style.display = 'none';
+      document.getElementById('DNI_required').style.display = 'none';
 
       document.getElementById('modal-nueva-cita').classList.add('is-active');
     };
@@ -167,6 +172,7 @@ document.getElementById("btn-filtrar").onclick = function (e) {
 };
 
 document.getElementById("btn-guardar").onclick = function (e) {
+  if (document.getElementById('DNI').value) {
     let xhr = new XMLHttpRequest();
     var form_data = new FormData(document.getElementById("form-cita"));
     xhr.open('POST', '/home/postCita');
@@ -184,7 +190,12 @@ document.getElementById("btn-guardar").onclick = function (e) {
     };
     xhr.onerror = function() {
       alert('Error postCita');
-    };
+    };  
+  }
+  else{
+    document.getElementById('DNI_required').style.display = 'block';
+  }
+
   };
 
 document.getElementById("btn-actualizar").onclick = function (e) {
@@ -230,5 +241,37 @@ document.getElementById("btn-cancelar").onclick = function (e) {
       alert('Error');
     };
     xhr.send("idCita="+idCita);
+  }
+};
+
+document.getElementById("DNI").onkeyup = function (e) {
+  document.getElementById('DNI_required').style.display = 'none';
+  if (this.value.length == 8) {
+
+    let xhr = new XMLHttpRequest();
+
+    var formData = new FormData()
+    formData.append("DNI", document.getElementById("DNI").value);
+
+    xhr.open('POST', '/home/getHCByDNI');
+    xhr.responseType = 'json';
+    xhr.send(formData);
+    xhr.onload = function() {
+      var data = xhr.response;  
+      
+      if (data != null) {
+        document.getElementById('Nombre').value = data.nombre;
+        document.getElementById('Celular').value = data.celular;
+        document.getElementById('Correo').value = data.correo;
+        document.getElementById('DNI_help').style.display = 'block';
+      }
+      else{
+        document.getElementById('DNI_help').style.display = 'none';
+      }  
+
+    };
+    xhr.onerror = function() {
+      alert('Error getHCByDNI');
+    };
   }
 };

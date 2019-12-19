@@ -72,6 +72,12 @@ namespace citas.Controllers
             return Json(citas);
         }
 
+        public JsonResult getHCByDNI(string DNI)
+        {
+            var hc = _context.HistoriaClinicas.Where(x => x.DNI == DNI).FirstOrDefault();
+            return Json(hc);
+        }
+
         public JsonResult getListaCitas(string nombre, int medico)
         {
             if (nombre == null)
@@ -86,7 +92,7 @@ namespace citas.Controllers
                             resourceId = m.IdMedico.ToString(),
                             start = m.FechaInicioCita,
                             end = m.FechaFinCita,
-                            title = m.NombreCliente,
+                            title = m.Nombre,
                             color = m.Tipos.Color,
                             }).ToList();
 
@@ -134,6 +140,18 @@ namespace citas.Controllers
                 objCita.FechaRegistro = DateTime.Now;
                 objCita.FechaFinCita = objCita.FechaInicioCita.AddMinutes(objCita.Duracion);
                 _context.Citas.Add(objCita);
+
+                if (objCita.IdTipo == 2 || objCita.IdTipo == 3 || (objCita.IdTipo == 1 && objCita.Pago == "on"))
+                {
+                    HistoriaClinica hc = new HistoriaClinica();
+                    hc.DNI = objCita.DNI;
+                    hc.Nombre = objCita.Nombre;
+                    hc.Celular = objCita.Celular;
+                    hc.Correo = objCita.Correo;
+                    hc.FechaRegistro = DateTime.Now;
+                    _context.HistoriaClinicas.Add(hc);
+                }
+
                 _context.SaveChanges();
 
                 return Json("1");  

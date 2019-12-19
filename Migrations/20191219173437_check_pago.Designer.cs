@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using citas.Models;
 
 namespace citas.Migrations
 {
     [DbContext(typeof(CitasContext))]
-    partial class CitasContextModelSnapshot : ModelSnapshot
+    [Migration("20191219173437_check_pago")]
+    partial class check_pago
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +46,7 @@ namespace citas.Migrations
 
                     b.Property<string>("Nombre");
 
-                    b.Property<string>("Pago");
+                    b.Property<bool>("Pago");
 
                     b.HasKey("IdCita");
 

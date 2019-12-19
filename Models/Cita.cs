@@ -14,9 +14,10 @@ namespace citas.Models
         [ForeignKey("IdMedico")]
         public virtual Medico Medicos { get; set; }
         public String DNI { get; set; }
-        public String NombreCliente { get; set; }
-        public String Movil { get; set; }
-        public String CorreoCliente { get; set; }
+        public String Pago { get; set; }
+        public String Nombre { get; set; }
+        public String Celular { get; set; }
+        public String Correo { get; set; }
         public DateTime FechaInicioCita { get; set; }
         public DateTime FechaFinCita { get; set; }
         public int Duracion { get; set; }

@@ -44,24 +44,34 @@
           <div class="control">
             <input class="input" type="text" id="DNI" name="DNI">
           </div>
+          <p id="DNI_help" class="help is-success" style="display: none;">Paciente con Historia Clínica</p>
+          <p id="DNI_required" class="help is-danger" style="display: none;">Requerido*</p>
+        </div>
+
+        <div class="field">
+          <label class="checkbox">
+            <input id="Pago" name="Pago" type="checkbox">
+              Realizó el pago
+          </label>
         </div>
 
         <div class="field">
           <label class="label">Nombres</label>
           <div class="control">
-            <input class="input" type="text" id="NombreCliente" name="NombreCliente">
+            <input class="input" type="text" id="Nombre" name="Nombre">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Celular</label>
+          <div class="control">
+            <input class="input" type="text" id="Celular" name="Celular">
           </div>
         </div>
         <div class="field">
           <label class="label">Correo</label>
           <div class="control">
-            <input class="input" type="email" id="CorreoCliente" name="CorreoCliente">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Celular</label>
-          <div class="control">
-            <input class="input" type="text" id="Movil" name="Movil">
+            <input class="input" type="email" id="Correo" name="Correo">
           </div>
         </div>
         <div class="field is-grouped">
@@ -112,7 +122,7 @@
         <div class="field">
           <label class="label">Comentarios</label>
           <div class="control">
-            <textarea class="textarea" placeholder="Textarea" id="Comentarios" name="Comentarios"></textarea>
+            <textarea class="textarea" id="Comentarios" name="Comentarios"></textarea>
           </div>
         </div>
         </form>
