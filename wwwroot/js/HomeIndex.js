@@ -73,6 +73,7 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
     document.getElementById('FechaInicioCita').value = arg.startStr.replace('T',' ').substring(0, 16);
     //document.getElementById('FechaFinCita').value = arg.endStr.replace('T',' ').substring(0, 16);   
     document.getElementById("IdTipo").value = 1;
+    document.getElementById("div-Pago").style.display = 'block';
 
     var restaFechas = Math.abs(new Date(arg.endStr.replace('T',' ').substring(0, 16)) - new Date(arg.startStr.replace('T',' ').substring(0, 16)));
     var minutos = Math.floor(restaFechas / 60000);
@@ -111,6 +112,11 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
       //document.getElementById('FechaFinCita').value = data.fechaFinCita.replace('T',' ').substring(0, 16);
       document.getElementById('Duracion').value = data.duracion;
       document.getElementById('IdTipo').value = data.idTipo;
+
+      if (data.idTipo != "1") {
+        document.getElementById("div-Pago").style.display = 'none';
+      }
+
       document.getElementById('Comentarios').value = data.comentarios;
       document.getElementById('btn-guardar').style.display = 'none';
       document.getElementById('btn-actualizar').style.display = 'block';
@@ -273,5 +279,14 @@ document.getElementById("DNI").onkeyup = function (e) {
     xhr.onerror = function() {
       alert('Error getHCByDNI');
     };
+  }
+};
+
+document.getElementById("IdTipo").onchange = function (e) {
+  if (document.getElementById("IdTipo").value == 1) {
+    document.getElementById("div-Pago").style.display = 'block';
+  }
+  else {
+    document.getElementById("div-Pago").style.display = 'none';
   }
 };

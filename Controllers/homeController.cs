@@ -141,7 +141,7 @@ namespace citas.Controllers
                 objCita.FechaFinCita = objCita.FechaInicioCita.AddMinutes(objCita.Duracion);
                 _context.Citas.Add(objCita);
 
-                if (objCita.IdTipo == 2 || objCita.IdTipo == 3 || (objCita.IdTipo == 1 && objCita.Pago == "on"))
+                if (objCita.IdTipo == 1 && objCita.Pago == "on")
                 {
                     HistoriaClinica hc = new HistoriaClinica();
                     hc.DNI = objCita.DNI;
