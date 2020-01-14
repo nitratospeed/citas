@@ -6,11 +6,11 @@
     <title>@ViewData["Title"] | Clínica Chávarri</title>
     <link rel="stylesheet" href="~/css/bulma/bulma.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <!-- <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script> -->
+    <script src="~/js/vue/vue.min.js"></script>
     @RenderSection("Styles", required: false)
   </head>
   <body>
-    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
           <a class="navbar-item" asp-area="" asp-controller="Home" asp-action="Index">
             <img src="~/images/logo.jpg" height="28">Clínica Chávarri
@@ -21,7 +21,7 @@
             <span aria-hidden="true"></span>
           </a>
         </div>
-      <div id="navbarBasicExample" class="navbar-menu">
+@*       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-end">
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
@@ -34,8 +34,9 @@
           </div>
           </div>
         </div>
-      </div>
+      </div> *@
     </nav>
+    <hr>
     <div class="container is-fluid">
         @RenderBody()
     </div>

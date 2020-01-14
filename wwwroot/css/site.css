@@ -1,31 +1,57 @@
 ﻿.container.is-fluid {
-    padding-left: 0em;
-    padding-right: 0em;
+    padding-left: 0rem;
+    padding-right: 0rem;
 }
 
 .navbar {
-    margin-bottom: 1em;
+    padding: 1rem;
+}
+
+hr {
+    margin: 0rem;
 }
 
 .footer {
-    padding: 2em;
-    margin-top: 1em;
+    padding-top: 3rem;
+    padding-right: 1.5rem;
+    padding-bottom: 3rem;
+    padding-left: 1.5rem;
 }
 
 .card {
-    margin: 1em;
+    margin: 1rem;
 }
 
 .modal-card {
     box-shadow: 0 0px 20px rgba(0,0,0,0.19), 0 0px 20px rgba(0,0,0,0.19);
     max-width: fit-content;
-    border-radius: 0.5em;
+    border-radius: 0.5rem;
 }
 
 .card-content {
-    padding: 1em;
+    padding: 1rem;
 }
 
 .modal-background {
     background-color: transparent;
+}
+
+@media (max-width: 799px) {
+    .hero-background {
+        background-image: url(../images/hero_image_portrait.jpg);
+        background-size: cover;
+    }
+}
+
+@media (min-width: 800px) {
+    .hero-background {
+        background-image: url(../images/hero_image.jpg);
+        background-size: cover;
+    }
+}
+
+.card-on-hero {
+    max-width: 50rem;
+    margin-right: auto;
+    margin-left: auto;
 }
